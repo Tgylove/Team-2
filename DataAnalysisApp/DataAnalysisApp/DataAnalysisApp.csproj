@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{47223A71-E1CB-4BFC-9E30-504B0C6F8F17}</ProjectGuid>
+    <ProjectGuid>{3A3484F3-0BA8-4B4E-B099-0E88BDCCF55F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NodeOrdersAnalysis</RootNamespace>
-    <AssemblyName>NodeOrdersAnalysis</AssemblyName>
+    <RootNamespace>DataAnalysisApp</RootNamespace>
+    <AssemblyName>DataAnalysisApp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -52,11 +52,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="NodeOrdersDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NodeOrdersDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -71,17 +66,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="NodeOrdersDataSet.xsc">
-      <DependentUpon>NodeOrdersDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="NodeOrdersDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>NodeOrdersDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="NodeOrdersDataSet.xss">
-      <DependentUpon>NodeOrdersDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,12 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OrderAnalysisClassLib\OrderAnalysisClassLib.csproj">
-      <Project>{4E0A1B6A-A2E3-40C0-898D-CAB49AE0D8F0}</Project>
-      <Name>OrderAnalysisClassLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
