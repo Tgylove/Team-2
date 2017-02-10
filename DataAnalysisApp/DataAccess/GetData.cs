@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using DataAccess.Models;
 
@@ -223,6 +224,66 @@ namespace DataAccess
             _sqlConnection.Close();
 
             return success;
+        }
+
+
+        //Group methods
+        //var sqlQuery: to make methods results easy to understand
+
+        /// <summary>
+        /// Gets the per CD analysis
+        /// </summary>
+        /// <param name="cdId">CdId from the CD-Table</param>
+        /// <returns>A data-table of pertinent information to figure out per CD Sales</returns>
+        public DataTable GetCdData(int cdId)
+        {
+            var sqlQuery =
+                "SELECT CD.CDname AS 'CD Name', CD.Artist AS Artist, CD.ListPrice - Orders.Price  AS Discount, Store.City As City " +
+                "FROM Orders " +
+                "INNER JOIN[CD-Table] AS CD " +
+                "ON Orders.CdID = CD.CdID " +
+                "INNER Join[Store-Table] AS Store " +
+                "ON Orders.StoreNumberID = Store.StoreNumberID " +
+                //this query needs to use a dynamic id
+                $"WHERE CD.CdID = {cdId} " +
+                "ORDER BY 'CD name', City, Discount";
+
+            var results = new DataTable();
+            _sqlConnection.Open();
+            var adapter =   new SqlDataAdapter(sqlQuery, _sqlConnection);
+            adapter.Fill(results);
+            _sqlConnection.Close();
+            return results;
+        }
+
+        /// <summary>
+        /// Gets sales per employee
+        /// </summary>
+        /// <returns>Data-table of pertinent data</returns>
+        public DataTable GetEmployeeData()
+        {
+            const string sqlQuery = "SELECT FirstName AS 'First Name', LastName AS 'Last Name', Totals.NoOrders AS 'Number or Orders', Totals.DOL AS  'Sales Total' FROM[SalesPerson-Table] INNER JOIN (SELECT SalesPersonID, COUNT(Orders.SalesPersonID)AS 'NoOrders', SUM(Orders.Price) AS DOL FROM Orders GROUP BY SalesPersonID) AS Totals  ON[SalesPerson-Table].SalesPersonID = Totals.SalesPersonID ORDER BY Totals.DOL DESC";
+            var results = new DataTable();
+            _sqlConnection.Open();
+            var adapter = new SqlDataAdapter(sqlQuery, _sqlConnection);
+            adapter.Fill(results);
+            _sqlConnection.Close();
+            return results;
+        }
+
+        /// <summary>
+        /// Get Sales Analysis by store
+        /// </summary>
+        /// <returns> Data-table</returns>
+        public DataTable GetStoreData()
+        {
+            const string sqlQuery = "SELECT Store.City AS City, Totals.NoOrders AS 'Number of Orders', Totals.DOL AS 'Sales Totals' FROM [Store-Table] AS Store INNER JOIN (SELECT StoreNumberID AS Id, COUNT(*) AS 'NoOrders', SUM(Orders.Price) AS DOL FROM Orders GROUP BY StoreNumberID) AS Totals ON Store.StoreNumberID = Totals.Id ORDER BY [Sales Totals] DESC";
+            var results = new DataTable();
+            _sqlConnection.Open();
+            var adapter = new SqlDataAdapter(sqlQuery, _sqlConnection);
+            adapter.Fill(results);
+            _sqlConnection.Close();
+            return results;
         }
     }
 }
