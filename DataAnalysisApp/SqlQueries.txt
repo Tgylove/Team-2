@@ -7,7 +7,7 @@ ON Orders.StoreNumberID = Store.StoreNumberID
 WHERE CD.CdID = 621453
 ORDER BY 'CD name', City, Discount
 
-SELECT FirstName AS 'First Name', LastName AS 'Last Name', Totals.NoOrders AS 'Numnber or Orders', Totals.DOL AS  'Sales Total'
+SELECT FirstName AS 'First Name', LastName AS 'Last Name', Totals.NoOrders AS 'Number or Orders', Totals.DOL AS  'Sales Total'
 FROM [SalesPerson-Table]
 INNER JOIN
 (SELECT SalesPersonID, COUNT(Orders.SalesPersonID) AS 'NoOrders', SUM(Orders.Price) AS DOL

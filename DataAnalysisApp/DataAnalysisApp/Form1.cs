@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Configuration;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataAccess;
-
-
 
 namespace DataAnalysisApp
 {
     public partial class Form1 : Form
     {
         private Data _data;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,11 +20,9 @@ namespace DataAnalysisApp
 
         private void btnCD_Click(object sender, EventArgs e)
         {
-            dgvOut.DataSource = _data.GetCdData((int)cboCD.SelectedValue);
+            dgvOut.DataSource = _data.GetCdData((int) cboCD.SelectedValue);
             dgvOut.Columns[2].DefaultCellStyle.Format = "c2";
             dgvOut.Columns[2].DefaultCellStyle.FormatProvider = CultureInfo.GetCultureInfo("en-US");
-
-
         }
 
         private void btnSales_Click(object sender, EventArgs e)
@@ -47,18 +38,16 @@ namespace DataAnalysisApp
             dgvOut.DataSource = _data.GetStoreData();
             dgvOut.Columns[2].DefaultCellStyle.Format = "c2";
             dgvOut.Columns[2].DefaultCellStyle.FormatProvider = CultureInfo.GetCultureInfo("en-US");
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void InitializeDataSource()
         {
             var connString =
-                System.Configuration.ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+                ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
             _data = new Data(connString);
         }
 
